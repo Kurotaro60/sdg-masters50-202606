@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDGマスターズ50 ｜ 予想車券＆オッズ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;900&family=Saira:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#14161b;--asphalt-2:#1c1f26;--panel:#191c22;--line:#2b2f39;
+    --paint:#f4f5f7;--muted:#878d9c;--signal:#ff2e2e;--amber:#ffb000;--tote:#17c47e;
+    --kawasaki:#3db54a;--yamaha:#1452d6;--honda:#e60012;
+    --slip:#f5f2e8;--slip-ink:#1c2330;--keiba:#0a7d4f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      repeating-linear-gradient(115deg, rgba(255,255,255,.012) 0 2px, transparent 2px 26px),
+      radial-gradient(120% 80% at 50% -10%, #20242c 0%, var(--asphalt) 55%);
+    color:var(--paint);font-family:"Noto Sans JP","Saira",sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 18px 80px}
+
+  /* HERO */
+  .hero{position:relative;margin-top:22px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#000}
+  .montage{display:flex;height:clamp(180px,33vw,310px)}
+  .montage img{flex:1;min-width:0;height:100%;object-fit:cover;object-position:center 26%;filter:grayscale(.22) brightness(.6) contrast(1.03)}
+  .montage img+img{border-left:1px solid rgba(0,0,0,.45)}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,22,27,.15) 0%,rgba(20,22,27,.45) 45%,var(--asphalt) 100%)}
+  .hero-body{position:absolute;left:0;right:0;bottom:0;padding:clamp(16px,3vw,30px);z-index:2}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:"Saira Condensed";font-weight:700;letter-spacing:.22em;font-size:12px;color:var(--amber);text-transform:uppercase;margin-bottom:10px}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--signal)}
+  h1{font-family:"Saira Condensed","Noto Sans JP";font-weight:900;line-height:.92;font-size:clamp(34px,8vw,76px);letter-spacing:-.01em;text-transform:uppercase}
+  h1 .jp{display:block;font-family:"Noto Sans JP";font-weight:900;font-size:clamp(14px,3.2vw,24px);letter-spacing:.04em;margin-top:6px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-family:"Saira";font-size:14px;color:#d6d9e0}
+  .meta b{font-family:"Saira Condensed";font-weight:700;color:var(--signal);letter-spacing:.04em}
+
+  .lead{margin:24px 2px 6px;font-size:14.5px;line-height:1.85;color:#c7ccd6;max-width:76ch}
+  .lead strong{color:#fff;font-weight:700}
+
+  .sec-title{font-family:"Saira Condensed";font-weight:900;letter-spacing:.14em;font-size:14px;text-transform:uppercase;color:var(--muted);margin:34px 2px 14px;display:flex;align-items:center;gap:12px}
+  .sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
+  .sec-title .live{color:var(--tote);display:inline-flex;align-items:center;gap:6px;font-size:11px}
+  .sec-title .dot{width:7px;height:7px;border-radius:50%;background:var(--tote);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(23,196,126,.5)}70%{box-shadow:0 0 0 7px rgba(23,196,126,0)}100%{box-shadow:0 0 0 0 rgba(23,196,126,0)}}
+
+  /* TOTE BOARD */
+  .board{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--panel)}
+  .brow{display:grid;grid-template-columns:34px 56px 1fr auto;gap:13px;align-items:center;padding:12px 15px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .brow:last-child{border-bottom:none}
+  .bnum{font-family:"Saira Condensed";font-weight:900;font-size:21px;text-align:center;color:#fff;position:relative}
+  .bnum .marque{position:absolute;left:-15px;top:-12px;bottom:-12px;width:5px;border-radius:3px}
+  .bthumb{width:56px;height:42px;border-radius:6px;object-fit:cover;object-position:center 25%;background:#000}
+  .bmid .bname{font-family:"Noto Sans JP";font-weight:700;font-size:15px;line-height:1.2}
+  .bmid .bteam{font-family:"Saira";font-size:11px;color:var(--muted);margin-top:3px}
+  .pop{display:inline-block;font-family:"Saira Condensed";font-weight:700;font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:4px;background:#23262e;color:var(--muted);margin-bottom:4px}
+  .pop.p1{background:var(--amber);color:#1a1500}
+  .pop.p2{background:#c9ccd4;color:#1a1d24}
+  .bodds{text-align:right;min-width:78px}
+  .bodds .v{font-family:"Roboto Mono";font-weight:700;font-size:26px;line-height:1;color:var(--amber);transition:color .3s}
+  .bodds .u{font-size:10px;color:var(--muted);font-family:"Saira";letter-spacing:.1em}
+  .bodds.flash .v{animation:flash .6s}
+  @keyframes flash{0%{color:var(--tote);transform:scale(1.12)}100%{color:var(--amber);transform:scale(1)}}
+
+  /* BET WINDOW */
+  .window{border:1px solid var(--line);border-radius:13px;background:linear-gradient(180deg,var(--asphalt-2),#16191f);overflow:hidden}
+  .tabs{display:flex;border-bottom:1px solid var(--line)}
+  .tab{flex:1;padding:15px 8px;background:none;border:none;color:var(--muted);cursor:pointer;font-family:"Noto Sans JP";font-weight:700;font-size:14px;letter-spacing:.04em;border-bottom:2px solid transparent;transition:.15s}
+  .tab .en{display:block;font-family:"Saira Condensed";font-size:10px;letter-spacing:.18em;margin-top:3px;opacity:.7}
+  .tab:hover{color:#cfd3db}
+  .tab.on{color:#fff;border-bottom-color:var(--signal);background:rgba(255,46,46,.05)}
+  .tab:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
+  .panel{padding:18px 18px 20px}
+  .ptype{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:15px}
+  .ptype b{color:#fff}
+  .slots{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
+  .slot{flex:1;min-width:92px;border:1px dashed var(--line);border-radius:9px;padding:9px 10px;min-height:58px;display:flex;flex-direction:column;justify-content:center;background:#15181e;transition:.15s}
+  .slot.full{border-style:solid;border-color:var(--signal);background:rgba(255,46,46,.06)}
+  .slot .rank{font-family:"Saira Condensed";font-weight:700;font-size:10px;letter-spacing:.12em;color:var(--amber)}
+  .slot .who{font-family:"Noto Sans JP";font-weight:700;font-size:14px;margin-top:3px;color:#fff}
+  .slot .who.empty{color:#4d5360;font-weight:500}
+  .chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}
+  .chip{position:relative;display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:#20242c;color:#fff;cursor:pointer;font-family:"Noto Sans JP";text-align:left;transition:.15s}
+  .chip:hover{border-color:#3a4150;background:#262b34}
+  .chip:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .chip .cn{font-family:"Saira Condensed";font-weight:900;font-size:18px;width:24px;text-align:center}
+  .chip .cmid{flex:1;min-width:0}
+  .chip .cname{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chip .cbike{font-family:"Saira";font-size:10.5px;color:var(--muted)}
+  .chip.picked{border-color:var(--signal);background:rgba(255,46,46,.12)}
+  .chip .pickbadge{position:absolute;top:6px;right:8px;font-family:"Saira Condensed";font-weight:900;font-size:11px;color:var(--signal);background:#fff;border-radius:4px;padding:1px 5px;display:none}
+  .chip.picked .pickbadge{display:block}
+  .cmarque{width:4px;align-self:stretch;border-radius:2px;margin:-9px 0 -9px -11px}
+  .quote{margin-top:18px;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;justify-content:space-between}
+  .quote .ql{font-size:12px;color:var(--muted);font-family:"Saira Condensed";letter-spacing:.12em;text-transform:uppercase}
+  .quote .oddsbig{font-family:"Roboto Mono";font-weight:700;font-size:40px;color:var(--amber);line-height:1}
+  .quote .oddsbig small{font-size:15px;color:var(--muted);font-family:"Saira";margin-left:4px}
+  .quote .prob{font-size:11.5px;color:var(--muted);margin-top:4px}
+  .quote .pay{font-size:12px;color:#c7ccd6}
+  .quote .pay b{color:var(--tote);font-family:"Roboto Mono";font-size:16px}
+  .quote .waiting{color:var(--muted);font-size:13px}
+  .actions{display:flex;gap:10px;margin-top:16px}
+  .buy{flex:1;border:none;background:var(--signal);color:#fff;font-family:"Noto Sans JP";font-weight:900;font-size:15px;letter-spacing:.06em;padding:14px;border-radius:9px;cursor:pointer;transition:.15s}
+  .buy:hover:not(:disabled){background:#ff4848;box-shadow:0 6px 20px rgba(255,46,46,.28)}
+  .buy:disabled{background:#2a2e37;color:#5a606e;cursor:not-allowed}
+  .buy:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .clear{border:1px solid var(--line);background:none;color:var(--muted);font-family:"Saira Condensed";font-weight:700;letter-spacing:.1em;font-size:12px;text-transform:uppercase;padding:0 18px;border-radius:9px;cursor:pointer}
+  .clear:hover{color:#fff;border-color:#3a4150}
+
+  /* 車券 TICKETS */
+  .tickets{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:14px}
+  .empty-note{font-size:13px;color:var(--muted);padding:20px;text-align:center;border:1px dashed var(--line);border-radius:12px;line-height:1.7}
+  .ticket{background:var(--slip);color:var(--slip-ink);border-radius:10px;overflow:hidden;position:relative;box-shadow:0 8px 22px rgba(0,0,0,.35);font-family:"Roboto Mono"}
+  .ticket.new{animation:issue .5s ease}
+  @keyframes issue{0%{transform:translateY(10px) scale(.97);opacity:0}100%{transform:none;opacity:1}}
+  .ticket .th{background:var(--keiba);color:#fff;padding:8px 13px;display:flex;justify-content:space-between;align-items:center;font-family:"Noto Sans JP";font-weight:700;font-size:13px;letter-spacing:.08em}
+  .ticket .th .bt{font-family:"Saira Condensed";font-size:10px;letter-spacing:.16em;opacity:.85}
+  .ticket .tb{padding:12px 14px}
+  .ticket .legs{display:flex;flex-direction:column;gap:5px}
+  .ticket .leg{display:flex;align-items:center;gap:9px;font-size:13px}
+  .ticket .leg .lr{font-weight:700;background:var(--slip-ink);color:var(--slip);font-size:9px;font-family:"Saira Condensed";letter-spacing:.08em;padding:2px 6px;border-radius:3px;min-width:34px;text-align:center}
+  .ticket .leg .ln{font-family:"Noto Sans JP";font-weight:700}
+  .ticket .leg .lno{color:#7a8190;margin-left:auto;font-size:12px}
+  .ticket .tfoot{margin-top:11px;padding-top:11px;border-top:1.5px dashed #c7c2b2;display:flex;justify-content:space-between;align-items:flex-end}
+  .ticket .od{font-size:11px;color:#5a6473}
+  .ticket .od b{font-size:20px;color:var(--keiba);font-weight:700}
+  .ticket .ret{text-align:right;font-size:10px;color:#5a6473}
+  .ticket .ret b{display:block;font-size:16px;color:var(--slip-ink);font-weight:700}
+  .ticket::before,.ticket::after{content:"";position:absolute;width:14px;height:14px;border-radius:50%;background:var(--asphalt);top:32px}
+  .ticket::before{left:-7px}.ticket::after{right:-7px}
+
+  .disc{font-size:11px;color:#5a606e;text-align:center;margin-top:22px;line-height:1.8;border:1px solid var(--line);border-radius:10px;padding:13px}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media(max-width:560px){
+    .brow{grid-template-columns:30px 44px 1fr auto;gap:10px;padding:11px 12px}
+    .bthumb{width:44px;height:34px}.bodds .v{font-size:22px}.tab{font-size:12.5px}
+    .quote{flex-direction:column;align-items:flex-start;gap:10px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="montage" aria-hidden="true">
+      <img src="yanagawa.jpg" alt=""><img src="haga.jpg" alt=""><img src="kagayama.jpg" alt=""><img src="kikuchi.jpg" alt=""><img src="kobayashi.jpg" alt="">
+    </div>
+    <div class="hero-body">
+      <span class="eyebrow">MFJ全日本ロードレース 第4戦 筑波 ／ JP-SPORT</span>
+      <h1>SDG MASTERS 50<span class="jp">予想車券売り場 ── 単勝・3連単・5連単</span></h1>
+      <div class="meta">
+        <span><b>6.21</b> 筑波サーキット</span>
+        <span><b>5</b> 出走（レジェンド5名）</span>
+        <span><b>ODDS</b> 投票連動・リアルタイム変動</span>
+      </div>
+    </div>
+  </header>
+
+  <p class="lead">
+    50代のレジェンド5名が若手育成クラスにスポット参戦。<br>
+    <strong>単勝から三連単、五連単を予想しよう。</strong>
+  </p>
+
+  <h2 class="sec-title">単勝オッズ ／ 人気ボード <span class="live"><span class="dot"></span>LIVE</span></h2>
+  <div class="board" id="board"></div>
+
+  <h2 class="sec-title">車券を買う</h2>
+  <section class="window">
+    <div class="tabs">
+      <button class="tab on" data-mode="tan">単勝<span class="en">WIN</span></button>
+      <button class="tab" data-mode="san">3連単<span class="en">TRIFECTA</span></button>
+      <button class="tab" data-mode="go">5連単<span class="en">FULL ORDER</span></button>
+    </div>
+    <div class="panel">
+      <p class="ptype" id="ptype"></p>
+      <div class="slots" id="slots"></div>
+      <div class="chips" id="chips"></div>
+      <div class="quote" id="quote"></div>
+      <div class="actions">
+        <button class="buy" id="buyBtn" disabled>車券を買う</button>
+        <button class="clear" id="clearBtn">クリア</button>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="sec-title">あなたの車券</h2>
+  <div id="myTickets"></div>
+
+  <p class="disc">
+    ※ これはファン向けの予想ゲームです。実際の金銭のやり取りはありません。配当は「100円賭けたら？」のシミュレーション表示です。
+  </p>
+</div>
+
+<script>
+/* ===================================================================
+   ▼▼▼ ここにGASのデプロイURLを貼ってください（空欄のままでもローカルで動きます） ▼▼▼ */
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxYBVGk-GBJP1MYdZBCUiAvlkkSwqkUYChdK2YBnVzsn4rj_SR8D4ofuDkDoAXAIyO4/exec";
+/* ▲▲▲ 例： const GAS_URL = "https://script.google.com/macros/s/AKfy...../exec"; ▲▲▲
+   =================================================================== */
+
+const RIDERS = [
+  { id:"yanagawa", num:"01", name:"柳川 明",   marque:"var(--kawasaki)", brand:"KAWASAKI",
+    bike:"カワサキ Ninja ZX-25R", img:"yanagawa.jpg" },
+  { id:"haga", num:"02", name:"芳賀 紀行",   marque:"var(--yamaha)", brand:"YAMAHA",
+    bike:"ヤマハ YZF-R3", img:"haga.jpg" },
+  { id:"kagayama", num:"03", name:"加賀山 就臣", marque:"var(--honda)", brand:"HONDA",
+    bike:"ホンダ CBR250RR", img:"kagayama.jpg" },
+  { id:"kikuchi", num:"04", name:"菊池 健一郎", marque:"var(--yamaha)", brand:"YAMAHA",
+    bike:"ヤマハ YZF-R3", img:"kikuchi.jpg" },
+  { id:"kobayashi", num:"05", name:"小林 正義", marque:"var(--yamaha)", brand:"YAMAHA",
+    bike:"ヤマハ YZF-R3", img:"kobayashi.jpg" },
+];
+const byId = Object.fromEntries(RIDERS.map(r=>[r.id,r]));
+
+const PAYBACK = { tan:0.80, san:0.725, go:0.70 };
+const SLOTS   = { tan:1, san:3, go:5 };
+const LABELS  = { tan:"単勝", san:"3連単", go:"5連単" };
+const RANKLAB = ["1着","2着","3着","4着","5着"];
+const PTYPE = {
+  tan:"<b>単勝</b>：1着になるライダーを当てる、いちばんシンプルな車券。",
+  san:"<b>3連単</b>：1着・2着・3着を<b>着順通り</b>に当てる。難度が上がるぶん配当も大きい。",
+  go :"<b>5連単</b>：5人全員の着順を<b>1着から5着まで完全的中</b>させる最高難度。大穴配当も。"
+};
+
+let winPool = {}; RIDERS.forEach(r=>winPool[r.id]=0);
+let myTickets = [];
+let mode = "tan";
+let pick = [];
+let prevOdds = {};
+
+/* ---------- network (GAS) ---------- */
+async function fetchPool(){
+  if(!GAS_URL) return null;
+  try{ const r=await fetch(GAS_URL); const d=await r.json(); return d.pool||d; }
+  catch(e){ return null; }
+}
+async function postVote(payload){
+  if(!GAS_URL) return null;
+  try{
+    const r=await fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    const d=await r.json(); return d.pool||d;
+  }catch(e){ return null; }
+}
+function applyPool(p){ if(!p)return; RIDERS.forEach(r=>{ if(typeof p[r.id]==="number") winPool[r.id]=p[r.id]; }); }
+
+/* ---------- my tickets (端末内に保存) ---------- */
+function loadTix(){ try{ const v=localStorage.getItem("sdg_m50_tix"); if(v) myTickets=JSON.parse(v); }catch(e){} }
+function saveTix(){ try{ localStorage.setItem("sdg_m50_tix",JSON.stringify(myTickets)); }catch(e){} }
+
+/* ---------- odds model ---------- */
+function winProbs(){
+  const a=1, ids=RIDERS.map(r=>r.id);
+  const tot=ids.reduce((s,id)=>s+winPool[id],0)+a*ids.length;
+  const p={}; ids.forEach(id=>p[id]=(winPool[id]+a)/tot); return p;
+}
+function winOdds(){ const p=winProbs(),o={}; RIDERS.forEach(r=>o[r.id]=Math.max(1.0,PAYBACK.tan/p[r.id])); return o; }
+function harville(order,p){ let prob=1,rem=1; for(const id of order){ prob*=p[id]/rem; rem-=p[id]; } return prob; }
+function comboOdds(order,pay){ const prob=harville(order,winProbs()); return {odds:Math.max(1.0,pay/prob),prob}; }
+function currentQuote(){
+  if(pick.length<SLOTS[mode]) return null;
+  if(mode==="tan"){ const p=winProbs(); return {odds:Math.max(1.0,PAYBACK.tan/p[pick[0]]),prob:p[pick[0]]}; }
+  return comboOdds(pick, PAYBACK[mode]);
+}
+
+/* ---------- format ---------- */
+function fmtOdds(o){ return o>=100 ? Math.round(o).toLocaleString("ja-JP") : (Math.round(o*10)/10).toFixed(1); }
+function fmtProb(p){ const c=p*100; if(c>=10)return c.toFixed(1)+"%"; if(c>=1)return c.toFixed(2)+"%"; return c.toFixed(3)+"%"; }
+function fmtYen(v){ return "¥"+Math.round(v).toLocaleString("ja-JP"); }
+
+/* ---------- render: board ---------- */
+function renderBoard(){
+  const odds=winOdds();
+  const rank={}; [...RIDERS].sort((a,b)=>odds[a.id]-odds[b.id]).forEach((r,i)=>rank[r.id]=i+1);
+  const board=document.getElementById("board"); board.innerHTML="";
+  RIDERS.forEach(r=>{
+    const rk=rank[r.id];
+    const popCls=rk===1?"pop p1":rk===2?"pop p2":"pop";
+    const changed=prevOdds[r.id]!==undefined && Math.abs(prevOdds[r.id]-odds[r.id])>0.05;
+    const row=document.createElement("div"); row.className="brow";
+    row.innerHTML=`
+      <div class="bnum"><span class="marque" style="background:${r.marque}"></span>${r.num}</div>
+      <img class="bthumb" src="${r.img}" alt="${r.name}" loading="lazy">
+      <div class="bmid"><span class="${popCls}">${rk}番人気</span>
+        <div class="bname">${r.name}</div><div class="bteam">${r.bike}</div></div>
+      <div class="bodds${changed?' flash':''}"><div class="v">${fmtOdds(odds[r.id])}</div><div class="u">倍 ／ 単勝</div></div>`;
+    board.appendChild(row); prevOdds[r.id]=odds[r.id];
+  });
+}
+
+/* ---------- render: bet window ---------- */
+function renderWindow(){
+  document.getElementById("ptype").innerHTML=PTYPE[mode];
+  const slots=document.getElementById("slots"); slots.innerHTML="";
+  for(let i=0;i<SLOTS[mode];i++){
+    const id=pick[i], r=id?byId[id]:null;
+    const s=document.createElement("div"); s.className="slot"+(r?" full":"");
+    s.innerHTML=`<span class="rank">${SLOTS[mode]===1?"勝つのは":RANKLAB[i]}</span>
+      <span class="who ${r?'':'empty'}">${r?`${r.num} ${r.name}`:"未選択"}</span>`;
+    slots.appendChild(s);
+  }
+  const chips=document.getElementById("chips"); chips.innerHTML="";
+  RIDERS.forEach(r=>{
+    const pos=pick.indexOf(r.id);
+    const b=document.createElement("button"); b.className="chip"+(pos>-1?" picked":"");
+    b.innerHTML=`<span class="cmarque" style="background:${r.marque}"></span>
+      <span class="cn">${r.num}</span>
+      <span class="cmid"><span class="cname">${r.name}</span><span class="cbike">${r.bike}</span></span>
+      <span class="pickbadge">${SLOTS[mode]===1?"◎":RANKLAB[pos]}</span>`;
+    b.addEventListener("click",()=>toggle(r.id)); chips.appendChild(b);
+  });
+  const q=currentQuote(), quote=document.getElementById("quote"), buy=document.getElementById("buyBtn");
+  if(!q){
+    const left=SLOTS[mode]-pick.length;
+    quote.innerHTML=`<span class="waiting">あと <b>${left}</b> 人選ぶとオッズが表示されます（${LABELS[mode]}）</span>`;
+    buy.disabled=true; buy.textContent="車券を買う";
+  }else{
+    quote.innerHTML=`
+      <div><div class="ql">${LABELS[mode]} 予想オッズ</div>
+        <div class="oddsbig">${fmtOdds(q.odds)}<small>倍</small></div>
+        <div class="prob">的中確率の目安 ${fmtProb(q.prob)}</div></div>
+      <div class="pay">100円的中で<br><b>${fmtYen(q.odds*100)}</b> 払戻（目安）</div>`;
+    buy.disabled=false; buy.textContent=`この${LABELS[mode]}を買う`;
+  }
+}
+function toggle(id){
+  const i=pick.indexOf(id);
+  if(i>-1) pick.splice(i,1);
+  else if(pick.length<SLOTS[mode]) pick.push(id);
+  renderWindow();
+}
+
+/* ---------- render: tickets ---------- */
+function renderTickets(newTs){
+  const host=document.getElementById("myTickets");
+  if(!myTickets.length){
+    host.innerHTML=`<div class="empty-note">まだ車券がありません。上の売り場で予想して「車券を買う」を押すと、ここに発券されます。</div>`; return;
+  }
+  const grid=document.createElement("div"); grid.className="tickets";
+  [...myTickets].reverse().forEach(t=>{
+    const legs=t.order.map((id,i)=>{ const r=byId[id];
+      return `<div class="leg"><span class="lr">${t.order.length===1?"勝":RANKLAB[i]}</span>
+        <span class="ln">${r.name}</span><span class="lno">No.${r.num}</span></div>`; }).join("");
+    const card=document.createElement("div"); card.className="ticket"+(t.ts===newTs?" new":"");
+    card.innerHTML=`
+      <div class="th"><span>${LABELS[t.type]}</span><span class="bt">SDG MASTERS 50</span></div>
+      <div class="tb"><div class="legs">${legs}</div>
+        <div class="tfoot"><div class="od">発券オッズ<br><b>${fmtOdds(t.odds)}倍</b></div>
+          <div class="ret">的中時 100円→<b>${fmtYen(t.odds*100)}</b></div></div></div>`;
+    grid.appendChild(card);
+  });
+  host.innerHTML=""; host.appendChild(grid);
+}
+
+/* ---------- buy ---------- */
+async function buy(){
+  const q=currentQuote(); if(!q)return;
+  const ts=Date.now(), order=[...pick], type=mode, winner=pick[0];
+  myTickets.push({type,order,odds:q.odds,ts}); saveTix();
+  winPool[winner]+=1; pick=[];
+  renderBoard(); renderWindow(); renderTickets(ts);
+  const server=await postVote({winner,type,order});
+  if(server){ applyPool(server); renderBoard(); }
+}
+
+/* ---------- init ---------- */
+function setMode(m){
+  mode=m; pick=[];
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.mode===m));
+  renderWindow();
+}
+(async function(){
+  loadTix();
+  applyPool(await fetchPool());
+  document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>setMode(t.dataset.mode)));
+  document.getElementById("buyBtn").addEventListener("click",buy);
+  document.getElementById("clearBtn").addEventListener("click",()=>{pick=[];renderWindow();});
+  renderBoard(); renderWindow(); renderTickets();
+  if(GAS_URL) setInterval(async ()=>{ const sp=await fetchPool(); if(sp){ applyPool(sp); renderBoard(); } }, 15000);
+})();
+</script>
+</body>
+</html>
