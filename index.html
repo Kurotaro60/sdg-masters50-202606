@@ -455,6 +455,16 @@ function renderTickets(newTs){
     grid.appendChild(card);
   });
   host.innerHTML=""; host.appendChild(grid);
+  const foot=document.createElement("div");
+  foot.style.cssText="text-align:center;margin-top:16px";
+  const btn=document.createElement("button");
+  btn.className="clear"; btn.textContent="この端末の車券を消す";
+  btn.addEventListener("click",()=>{
+    if(confirm("この端末に保存されている自分の車券をすべて消しますか？\n（他の人の車券やオッズには影響しません）")){
+      myTickets=[]; saveTix(); renderTickets();
+    }
+  });
+  foot.appendChild(btn); host.appendChild(foot);
 }
 
 /* ---------- buy ---------- */
