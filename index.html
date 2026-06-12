@@ -302,7 +302,7 @@ async function post(payload){
   }catch(e){ return null; }
 }
 function applyPool(p){ if(!p)return; RIDERS.forEach(r=>{ if(typeof p[r.id]==="number") winPool[r.id]=p[r.id]; }); }
-function applyState(s){ if(!s) return; if(s.pool) applyPool(s.pool); if("result" in s) result = (s.result && s.result.length) ? s.result : null; }
+function applyState(s){ if(!s || typeof s!=="object") return; if(s.pool) applyPool(s.pool); if("result" in s) result = (s.result && s.result.length) ? s.result : null; }
 
 /* ---------- my tickets ---------- */
 function loadTix(){ try{ const v=localStorage.getItem("sdg_m50_tix"); if(v) myTickets=JSON.parse(v); }catch(e){} }
@@ -515,7 +515,7 @@ function setMode(m){ mode=m; pick=[];
 
 (async function(){
   loadTix();
-  applyState(await getState());
+  // 先にイベント配線とローカル描画（ネットワークに依存せず必ず表示する）
   document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>setMode(t.dataset.mode)));
   document.getElementById("buyBtn").addEventListener("click",buy);
   document.getElementById("clearBtn").addEventListener("click",()=>{pick=[];renderWindow();});
@@ -523,6 +523,8 @@ function setMode(m){ mode=m; pick=[];
   document.getElementById("clearResultBtn").addEventListener("click",clearResult);
   window.addEventListener("hashchange",renderAdmin);
   renderAll();
+  // そのあとサーバーの最新状態を取り込んで更新（失敗しても表示は維持）
+  try{ const s=await getState(); if(s){ applyState(s); renderAll(); } }catch(e){}
 
   // 1秒ごと：締切カウントダウン更新（締切またぎで売り場もロック）
   setInterval(()=>{ renderStatus(); const c=isClosed(); if(c!==_wasClosed){ _wasClosed=c; renderWindow(); } }, 1000);
