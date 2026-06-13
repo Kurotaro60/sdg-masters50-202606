@@ -193,7 +193,7 @@
 
   <p class="lead">
     50代のレジェンド5名が若手育成クラスにスポット参戦。<br>
-    <strong>単勝から三連単、五連単を予想しよう。</strong>
+    <strong>単勝から三連単、五連単を予想して盛り上がろう！！</strong>
   </p>
 
   <div class="statusbar" id="statusBar" style="display:none"></div>
@@ -201,7 +201,7 @@
   <h2 class="sec-title">単勝オッズ ／ 人気ボード <span class="live"><span class="dot"></span>LIVE</span></h2>
   <div class="board" id="board"></div>
 
-  <h2 class="sec-title">車券を買う</h2>
+  <h2 class="sec-title">車券をベットする</h2>
   <section class="window">
     <div class="tabs">
       <button class="tab on" data-mode="tan">単勝<span class="en">WIN</span></button>
@@ -214,7 +214,7 @@
       <div class="chips" id="chips"></div>
       <div class="quote" id="quote"></div>
       <div class="actions">
-        <button class="buy" id="buyBtn" disabled>車券を買う</button>
+        <button class="buy" id="buyBtn" disabled>車券をベットする</button>
         <button class="clear" id="clearBtn">クリア</button>
       </div>
     </div>
@@ -238,7 +238,7 @@
   </section>
 
   <p class="disc">
-    ※ これはファン向けの予想ゲームです。実際の金銭のやり取りはありません。配当は「100円賭けたら？」のシミュレーション表示です。
+    ※ これはファン向けの予想ゲームです。実際の金銭のやり取りはありません。配当は「100 GOLD賭けたら？」のシミュレーション表示です。
   </p>
 </div>
 
@@ -326,7 +326,7 @@ function currentQuote(){
 /* ---------- format ---------- */
 function fmtOdds(o){ return o>=100 ? Math.round(o).toLocaleString("ja-JP") : (Math.round(o*10)/10).toFixed(1); }
 function fmtProb(p){ const c=p*100; if(c>=10)return c.toFixed(1)+"%"; if(c>=1)return c.toFixed(2)+"%"; return c.toFixed(3)+"%"; }
-function fmtYen(v){ return "¥"+Math.round(v).toLocaleString("ja-JP"); }
+function fmtYen(v){ return Math.round(v).toLocaleString("ja-JP")+" GOLD"; }
 function fmtCountdown(ms){ const s=Math.max(0,Math.floor(ms/1000)); const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60; const p=n=>String(n).padStart(2,"0"); return (h>0?p(h)+":":"")+p(m)+":"+p(x); }
 
 /* ---------- judge ticket ---------- */
@@ -411,14 +411,14 @@ function renderWindow(){
   if(!q){
     const left=SLOTS[mode]-pick.length;
     quote.innerHTML=`<span class="waiting">あと <b>${left}</b> 人選ぶとオッズが表示されます（${LABELS[mode]}）</span>`;
-    buy.disabled=true; buy.textContent="車券を買う";
+    buy.disabled=true; buy.textContent="車券をベットする";
   }else{
     quote.innerHTML=`
       <div><div class="ql">${LABELS[mode]} 予想オッズ</div>
         <div class="oddsbig">${fmtOdds(q.odds)}<small>倍</small></div>
         <div class="prob">的中確率の目安 ${fmtProb(q.prob)}</div></div>
-      <div class="pay">100円的中で<br><b>${fmtYen(q.odds*100)}</b> 払戻（目安）</div>`;
-    buy.disabled=false; buy.textContent=`この${LABELS[mode]}を買う`;
+      <div class="pay">100 GOLD的中で<br><b>${fmtYen(q.odds*100)}</b> 払戻（目安）</div>`;
+    buy.disabled=false; buy.textContent=`この${LABELS[mode]}をベットする`;
   }
 }
 function toggle(id){
@@ -433,7 +433,7 @@ function toggle(id){
 function renderTickets(newTs){
   const host=document.getElementById("myTickets");
   if(!myTickets.length){
-    host.innerHTML=`<div class="empty-note">まだ車券がありません。上の売り場で予想して「車券を買う」を押すと、ここに発券されます。</div>`; return;
+    host.innerHTML=`<div class="empty-note">まだ車券がありません。上の売り場で予想して「車券をベットする」を押すと、ここに発券されます。</div>`; return;
   }
   const grid=document.createElement("div"); grid.className="tickets";
   [...myTickets].reverse().forEach(t=>{
@@ -442,7 +442,7 @@ function renderTickets(newTs){
       return `<div class="leg"><span class="lr">${t.order.length===1?"勝":RANKLAB[i]}</span>
         <span class="ln">${r.name}</span><span class="lno">No.${r.num}</span></div>`; }).join("");
     let judgeHtml="";
-    if(hit===true) judgeHtml=`<div class="judge">的中！ 100円 → ${fmtYen(t.odds*100)}</div>`;
+    if(hit===true) judgeHtml=`<div class="judge">的中！ 100 GOLD → ${fmtYen(t.odds*100)}</div>`;
     else if(hit===false) judgeHtml=`<div class="judge">はずれ</div>`;
     const card=document.createElement("div");
     card.className="ticket"+(t.ts===newTs?" new":"")+(hit===true?" hit":hit===false?" miss":"");
@@ -450,7 +450,7 @@ function renderTickets(newTs){
       <div class="th"><span>${LABELS[t.type]}</span><span class="bt">SDG MASTERS 50</span></div>
       <div class="tb"><div class="legs">${legs}</div>
         <div class="tfoot"><div class="od">発券オッズ<br><b>${fmtOdds(t.odds)}倍</b></div>
-          <div class="ret">的中時 100円→<b>${fmtYen(t.odds*100)}</b></div></div>
+          <div class="ret">的中時 100 GOLD→<b>${fmtYen(t.odds*100)}</b></div></div>
         ${judgeHtml}</div>`;
     grid.appendChild(card);
   });
